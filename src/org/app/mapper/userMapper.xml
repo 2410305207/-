@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.app.mapper.UserMapper">
+
+	<select id="getHdPath" parameterType="int" resultType="String">
+		select hdimage from tb_user where user_id = #{user_id}
+	</select>
+
+	<!-- 根据用户名查询用户id -->
+	<select id="queryUser_id" parameterType="String"
+		resultType="int">
+		select user_id from tb_user where name = #{name}
+	</select>
+
+	<!-- 查询所有用户信息 -->
+	<select id="queryAllUser" resultType="user">
+		select * from tb_user
+	</select>
+
+	<!-- 根据user_id查询到用户信息 -->
+	<select id="queryUserById" parameterType="int" resultType="user">
+		select * from tb_user where user_id=#{user_id}
+	</select>
+	<!-- 根据user_id查询到用户Name -->
+	<select id="queryUserNameById" parameterType="int"
+		resultType="String">
+		select name from tb_user where user_id=#{user_id}
+	</select>
+
+	<!-- 登录用户信息查询 -->
+	<select id="loginUser" parameterType="String" resultType="user">
+		select
+		* from tb_user where username=#{username} and password = #{password}
+	</select>
+
+	<!-- 注册用户 -->
+	<insert id="registerUser" parameterType="user">
+		insert into
+		tb_user(user_id,username,name,password,email,introduction,aboutme,hdimage)
+		values(#{user_id},#{username},#{name},#{password},#{email},#{introduction},#{aboutme},#{hdimage})
+	</insert>
+
+	<!-- 更新用户信息 -->
+	<update id="updateUser" parameterType="user">
+		update tb_user set
+		username=#{username},name=#{name},password=#{password},email=#{email},introduction=#{introduction},hdimage=#{hdimage}
+		where user_id=#{user_id}
+	</update>
+	<update id="setPicPath">
+		update tb_user set hdimage = #{headimg} where
+		user_id
+		= #{user_id}
+	</update>
+
+</mapper>

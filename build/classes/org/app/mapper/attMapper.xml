@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.app.mapper.AttMapper">
+
+	<select id="queryOneAtt" parameterType="int" resultType="att">
+		select *
+		from tb_att
+		where user_id = #{user_id} AND user_id_att = #{user_id_att}
+	</select>
+
+	<delete id="deleteAtt" parameterType="int">
+		delete FROM tb_att WHERE
+		user_id = #{user_id} AND user_id_att = #{user_id_att}
+	</delete>
+
+	<insert id="createAtt" parameterType="int">
+		insert into
+		tb_att(att_id,user_id,user_id_att)
+		values(null,#{user_id},#{user_id_att})
+	</insert>
+
+	<select id="queryAllAttentions" parameterType="att"
+		resultType="att">
+		select * from tb_att
+	</select>
+
+	<!-- 查询当前用户粉丝数 -->
+	<select id="queryFanNum" parameterType="int" resultType="int">
+		SELECT
+		count(*) from tb_att where user_id_att = #{user_id_att}
+	</select>
+	<!-- 查询当前用户粉丝的user_id -->
+	<select id="queryFanUser_id" parameterType="int"
+		resultType="int">
+		select user_id from tb_att where user_id_att =
+		#{user_id_att}
+	</select>
+
+	<!-- 查询当前用户关注数 -->
+	<select id="queryAttNum" parameterType="int" resultType="int">
+		SELECT
+		count(*) from tb_att where user_id = #{user_id}
+	</select>
+	<!-- 查询当前用户关注用户的user_id -->
+	<select id="queryAttUser_id" parameterType="int"
+		resultType="int">
+		select user_id_att from tb_att where user_id = #{user_id}
+	</select>
+
+
+
+</mapper>

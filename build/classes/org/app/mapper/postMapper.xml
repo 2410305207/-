@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.app.mapper.PostMapper">
+
+	<select id="queryLikePost" parameterType="String"
+		resultType="post">
+		select * from tb_post where title like '%${world}%'
+	</select>
+
+	<select id="queryParPost" parameterType="int" resultType="post">
+		select
+		* from tb_post where partition_id = #{partition_id}
+	</select>
+
+	<select id="queryP_id" resultType="int">
+		select post_id from tb_post
+		where user_id = #{user_id} AND context
+		= #{context} AND title =
+		#{title}
+	</select>
+
+	<!-- 点赞文章 -->
+	<select id="PostLike" parameterType="int">
+		update tb_post set post_like
+		= #{post_like} where post_id = #{post_id}
+	</select>
+
+	<select id="queryAllPost" resultType="post">
+		select * from tb_post order
+		by post_like desc
+	</select>
+
+	<select id="queryPostByUserId" parameterType="int"
+		resultType="post">
+		select * from
+		tb_post where user_id = #{user_id}
+	</select>
+
+	<!-- 根据文章id获取文章信息 -->
+	<select id="queryPostByPost_id" parameterType="int"
+		resultType="post">
+		select * from tb_post where post_id = #{post_id}
+	</select>
+
+	<insert id="insertNewPost" parameterType="post">
+		insert into
+		tb_post(post_id,partition_id,user_id,context,image,remark_id,post_date,post_like,title)
+		values(#{post_id},#{partition_id},#{user_id},#{context},#{image},#{remark_id},#{post_date},0,#{title})
+	</insert>
+
+
+
+
+
+</mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.app.mapper.RemarkMapper">
+
+	<select id="queryOneRemark" resultType="int">
+		select remark_id from
+		tb_remark where post_id = #{post_id} AND user_id = #{user_id} AND
+		remark_context = #{context}
+	</select>
+
+	<!-- 评论点赞数更新 -->
+	<update id="remark_likeUpDate" parameterType="int">
+		update tb_remark
+		set remark_like = #{remark_like} where remark_id = #{remark_id}
+	</update>
+
+	<!-- <select id="queryNextR" parameterType="int" resultType="remark"> select 
+		* from tb_remark where parent_id = #{parent_id} </select> -->
+
+	<select id="queryTopR" parameterType="int" resultType="remark">
+		select *
+		from tb_remark where post_id = #{post_id}
+	</select>
+
+	<select id="queryRemarkID" parameterType="int" resultType="int">
+		select remark_id from tb_remark where user_id = #{user_id} AND post_id
+		= #{post_id} AND remark_context = #{context}
+	</select>
+
+
+	<select id="queryAllRemark" parameterType="remark">
+		select * from
+		tb_remark
+	</select>
+
+	<select id="queryRemarkByuserid" parameterType="int"
+		resultType="remark">
+		select * from tb_remark where user_id = #{user_id}
+	</select>
+
+	<select id="queryRemarkBypostid" parameterType="int"
+		resultType="remark">
+		select * from tb_remark where post_id = #{post_id}
+	</select>
+
+	<select id="queryRemarkByparentid" parameterType="int"
+		resultType="remark">
+		select * from tb_remark where parent_id = #{parent_id}
+	</select>
+
+	<insert id="insertNewRemark" parameterType="remark">
+		insert into
+		tb_remark(remark_id,user_id,parent_id,post_id,remark_date,remark_context,remark_like)
+		values(#{remark_id},#{user_id},#{parent_id},#{post_id},#{remark_date},#{remark_context},0)
+	</insert>
+
+</mapper>

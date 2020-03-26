@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.app.mapper.LikepostMapper">
+
+	<!-- 获取点赞人的id集合 -->
+	<select id="queryLikeBypostId" parameterType="int"
+		resultType="int">
+		select user_id from tb_likepost where post_id=#{post_id}
+	</select>
+
+	<!-- 获取点赞人数 -->
+	<select id="getPostLike" parameterType="int" resultType="int">
+		select count(*) from tb_likepost where post_id = #{post_id}
+	</select>
+
+
+	<!-- 点赞与取消 -->
+	<insert id="likeuser" parameterType="likepost">
+		insert tb_likepost set
+		id=#{id},post_id=#{post_id},user_id=#{user_id}
+	</insert>
+	<delete id="notlikeuser" parameterType="int">
+		delete FROM tb_likepost
+		where
+		user_id = #{user_id} AND post_id = #{post_id}
+	</delete>
+</mapper>
